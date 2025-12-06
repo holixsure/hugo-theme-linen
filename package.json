@@ -1,0 +1,23 @@
+{
+  "name": "hugo-theme-linen",
+  "version": "1.0.0",
+  "description": "A super concise theme for Hugo",
+  "main": "index.js",
+  "scripts": {
+    "start": "hugo --gc --minify"
+  },
+  "repository": "https://github.com/holixsure/hugo-theme-linen",
+  "author": "HolixSure <holixsure@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/holixsure/hugo-theme-linen/issues"
+  },
+  "homepage": "https://github.com/holixsure/hugo-theme-linen",
+  "devDependencies": {
+    "autoprefixer": "^10.2.5",
+    "postcss": "^8.4.31",
+    "postcss-cli": "^8.3.1",
+    "tailwindcss": "^2.0.4"
+  }
+
+}
