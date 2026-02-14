@@ -1,0 +1,38 @@
+baseURL = "http://example.org/"
+languageCode = "en-us"
+title = "My Hugo Site"
+
+[params]
+  # Theme settings
+  theme = "everos"
+  
+  # Site settings
+  description = "A minimalist Hugo site"
+  author = "John Doe"
+  
+  # Theme customization
+  [params.everos]
+    # Color scheme (light or dark)
+    defaultTheme = "light"
+    
+    # Navigation
+    [params.everos.navigation]
+      logo = ""
+      logoText = "Everos"
+      showMenu = true
+      
+    # Sidebar
+    [params.everos.sidebar]
+      enabled = true
+      position = "right" # left or right
+      
+    # Footer
+    [params.everos.footer]
+      showCopyright = true
+      copyrightText = "© 2024 All rights reserved"
+      showSocial = false
+      
+      [params.everos.footer.social]
+        twitter = ""
+        github = ""
+        linkedin = ""

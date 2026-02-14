@@ -1,0 +1,25 @@
+<footer class="footer">
+  <div class="container">
+    <div class="copyright">
+      {{ with .Site.Params.everos.footer.copyrightText }}
+        {{ . }}
+      {{ else }}
+        © {{ now.Year }} {{ .Site.Title }}. All rights reserved.
+      {{ end }}
+    </div>
+    
+    {{ if .Site.Params.everos.footer.showSocial }}
+    <div class="social-links">
+      {{ with .Site.Params.everos.footer.social.twitter }}
+        <a href="{{ . }}" class="social-link" aria-label="Twitter">Twitter</a>
+      {{ end }}
+      {{ with .Site.Params.everos.footer.social.github }}
+        <a href="{{ . }}" class="social-link" aria-label="GitHub">GitHub</a>
+      {{ end }}
+      {{ with .Site.Params.everos.footer.social.linkedin }}
+        <a href="{{ . }}" class="social-link" aria-label="LinkedIn">LinkedIn</a>
+      {{ end }}
+    </div>
+    {{ end }}
+  </div>
+</footer>

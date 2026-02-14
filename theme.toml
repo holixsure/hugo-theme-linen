@@ -1,0 +1,8 @@
+name = "Linen"
+description = "A minimalist Hugo theme with dark mode support"
+author = "HolixSure"
+authorURL = "https://example.com"
+license = "MIT"
+min_version = "0.120.0"
+tags = ["minimal", "dark mode", "responsive", "clean"]
+features = ["dark mode", "responsive design", "customizable"]

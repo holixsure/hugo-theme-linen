@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} - {{ .Site.Title }}{{ end }}</title>
+  <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
+  
+  <!-- JS -->
+  <script src="{{ "js/main.js" | relURL }}" defer></script>
+</head>
+<body>
+  <!-- Header -->
+  {{ partial "header.html" . }}
+  
+  <!-- Main content -->
+  <main class="main">
+    <div class="container">
+      {{ if .Site.Params.linen.sidebar.enabled }}
+      <div class="layout-with-sidebar">
+        <div class="main-content">
+          {{ block "main" . }}
+          {{ end }}
+        </div>
+        {{ partial "sidebar.html" . }}
+      </div>
+      {{ else }}
+        {{ block "main" . }}
+        {{ end }}
+      {{ end }}
+    </div>
+  </main>
+  
+  <!-- Footer -->
+  {{ partial "footer.html" . }}
+</body>
+</html>
