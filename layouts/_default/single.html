@@ -1,29 +1,62 @@
 {{ define "main" }}
-  <article class="post">
-    <header class="post-header mb-3">
-      <h1 class="post-title">{{ .Title }}</h1>
-      <div class="post-meta mb-1">
-        <span class="post-date">{{ .Date.Format "2006-01-02" }}</span>
-        {{ with .Params.categories }}
-        <span class="post-categories">
-          {{ range . }}
-            <a href="{{ "categories/" | relURL }}{{ . | urlize }}">{{ . }}</a>
+  <div class="post-with-toc">
+    <!-- Table of Contents -->
+    <aside class="post-toc">
+      <div class="toc-container">
+        <h3 class="toc-title">文章目录</h3>
+        <nav class="toc-nav">
+          {{ if .Content }}
+            {{ $headers := findRE "<h[2-3].*?>(.|\\n)*?</h[2-3]>" .Content }}
+            {{ if gt (len $headers) 0 }}
+              <ul class="toc-list">
+                {{ range $headers }}
+                  {{ $headerLevel := replaceRE "<h([2-3]).*?>" "$1" . }}
+                  {{ $headerText := replaceRE "<h[2-3].*?>(.*?)</h[2-3]>" "$1" . }}
+                  {{ $headerId := replaceRE "<h[2-3].*?id=\"(.*?)\".*?>" "$1" . }}
+                  {{ if not $headerId }}
+                    {{ $headerId = urlize $headerText }}
+                  {{ end }}
+                  <li class="toc-item level-{{ $headerLevel }}">
+                    <a href="#{{ $headerId }}" class="toc-link">{{ $headerText }}</a>
+                  </li>
+                {{ end }}
+              </ul>
+            {{ else }}
+              <p class="toc-empty">本文无章节</p>
+            {{ end }}
           {{ end }}
-        </span>
-        {{ end }}
-        {{ with .Params.tags }}
-        <span class="post-tags">
-          {{ range . }}
-            <a href="{{ "tags/" | relURL }}{{ . | urlize }}">#{{ . }}</a>
-          {{ end }}
-        </span>
-        {{ end }}
+        </nav>
       </div>
-    </header>
+    </aside>
     
-    <div class="post-content">
-      {{ .Content }}
-    </div>
+    <!-- Main Content -->
+    <article class="post">
+      <header class="post-header mb-3">
+        <h1 class="post-title">{{ .Title }}</h1>
+        <div class="post-meta mb-1">
+          <span class="post-date">{{ .Date.Format "2006-01-02" }}</span>
+          {{ with .Params.categories }}
+          <span class="post-categories">
+            {{ range . }}
+              <a href="{{ "categories/" | relURL }}{{ . | urlize }}">{{ . }}</a>
+            {{ end }}
+          </span>
+          {{ end }}
+        </div>
+        {{ with .Params.tags }}
+        <div class="post-tags-section mb-3">
+          <div class="post-tags">
+            {{ range . }}
+              <a href="{{ "tags/" | relURL }}{{ . | urlize }}" class="post-tag">#{{ . }}</a>
+            {{ end }}
+          </div>
+        </div>
+        {{ end }}
+      </header>
+      
+      <div class="post-content">
+        {{ .Content }}
+      </div>
     
     <footer class="post-footer mt-3">
       {{ if .Prev }}
@@ -37,5 +70,6 @@
       </div>
       {{ end }}
     </footer>
-  </article>
+    </article>
+  </div>
 {{ end }}

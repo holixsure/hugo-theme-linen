@@ -14,7 +14,9 @@
     
     <nav class="nav">
       {{ range .Site.Menus.main }}
-        <a href="{{ .URL }}" class="nav-link">{{ .Name }}</a>
+        {{ $isCurrent := eq .URL $.RelPermalink }}
+        {{ $isSection := and (ne .URL "/") (eq (path.Dir $.RelPermalink) (path.Dir .URL)) }}
+        <a href="{{ .URL }}" class="nav-link{{ if or $isCurrent $isSection }} active{{ end }}">{{ .Name }}</a>
       {{ end }}
       
       <button class="theme-toggle" aria-label="Toggle theme" title="Toggle dark/light mode">

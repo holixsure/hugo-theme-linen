@@ -1,36 +1,59 @@
 {{ define "main" }}
-  {{ with .Site.Params.description }}
-    <p class="text-center mb-3">{{ . }}</p>
-  {{ end }}
-  
-  <div class="posts">
-    {{ range .Site.RegularPages.ByDate.Reverse }}
-    <article class="post-card mb-3">
-      <h2 class="post-title">
-        <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-      </h2>
-      <div class="post-meta mb-1">
-        <span class="post-date">{{ .Date.Format "2006-01-02" }}</span>
-        {{ with .Params.categories }}
-        <span class="post-categories">
-          {{ range . }}
-            <a href="{{ "categories/" | relURL }}{{ . | urlize }}">{{ . }}</a>
-          {{ end }}
-        </span>
+  <div class="post-with-toc">
+    <!-- Sidebar with author info -->
+    <aside class="post-toc">
+      <div class="toc-container">
+        <div class="author-info">
+          <div class="author-avatar">
+            <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=professional%20developer%20avatar%20portrait%20simple%20clean%20style&image_size=square" alt="作者头像" class="avatar-img">
+          </div>
+          <h3 class="author-name">关于博主</h3>
+          <p class="author-bio">热爱技术的开发者，喜欢探索新的技术领域，分享学习经验和心得。</p>
+        </div>
+        
+        <div class="site-info">
+          <h3 class="site-title">关于站点</h3>
+          <p class="site-description">{{ .Site.Params.description | default "相信简单" }}</p>
+        </div>
+      </div>
+    </aside>
+    
+    <!-- Main content -->
+    <div class="posts-container">
+      {{ with .Site.Params.description }}
+        <p class="text-center mb-3">{{ . }}</p>
+      {{ end }}
+      
+      <div class="posts">
+        {{ range .Site.RegularPages.ByDate.Reverse }}
+        <article class="post-card mb-3">
+          <h2 class="post-title">
+            <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+          </h2>
+          <div class="post-meta mb-1">
+            <span class="post-date">{{ .Date.Format "2006-01-02" }}</span>
+            {{ with .Params.categories }}
+            <span class="post-categories">
+              {{ range . }}
+                <a href="{{ "categories/" | relURL }}{{ . | urlize }}">{{ . }}</a>
+              {{ end }}
+            </span>
+            {{ end }}
+          </div>
+          <div class="post-summary mb-1">
+            {{ $raw := .RawContent }}
+            {{ $more := "<!-- more -->" }}
+            {{ if strings.Contains $raw $more }}
+              {{ $split := strings.Split $raw $more }}
+              {{ index $split 0 | markdownify }}
+            {{ else }}
+              {{ .Summary }}
+            {{ end }}
+          </div>
+          <a href="{{ .RelPermalink }}" class="post-read-more">阅读全文 →</a>
+        </article>
         {{ end }}
       </div>
-      <div class="post-summary mb-1">
-        {{ $raw := .RawContent }}
-        {{ $more := "<!-- more -->" }}
-        {{ if strings.Contains $raw $more }}
-          {{ $split := strings.Split $raw $more }}
-          {{ index $split 0 | markdownify }}
-        {{ else }}
-          {{ .Summary }}
-        {{ end }}
-      </div>
-      <a href="{{ .RelPermalink }}" class="post-read-more">阅读全文 →</a>
-    </article>
-    {{ end }}
+    </div>
   </div>
 {{ end }}
